@@ -1,5 +1,5 @@
 import express from "express";
-import { BaseController } from "./controllers/abstractions/base-controller";
+import {BaseController} from "./base/abstractions/BaseController";
 class App {
     public app: express.Application;
     public port: number | string;
