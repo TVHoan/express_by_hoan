@@ -9,7 +9,16 @@
     "dev": "cross-env NODE_ENV=development concurrently \"tsc --watch\" \"nodemon -q dist/index.js\"",
     "prestart": "npm run build",
     "start": "cross-env NODE_ENV=production node dist/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "typeorm": "npm run build & npx typeorm -d dist/data-source.js",
+    "migration:generate": "npm run typeorm -- migration:generate",
+    "migration:run": " npm run typeorm -- migration:run",
+    "db:create": "ts-node ./node_modules/typeorm-extension/bin/cli.cjs db:create",
+    "db:drop": "ts-node ./node_modules/typeorm-extension/bin/cli.cjs db:drop",
+    "seed:run": "ts-node ./node_modules/typeorm-extension/bin/cli.cjs seed:run",
+    "seed:create": "ts-node ./node_modules/typeorm-extension/bin/cli.cjs seed:create",
+    "seed": " ts-node src/seeder.ts",
+    "init" : "npm run  db:create &  npm run migration:run & npm run seed:run "
   },
   "author": "TVHoan",
   "license": "ISC",
@@ -19,13 +28,15 @@
     "cross-env": "^7.0.3",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
-    "mysql": "^2.18.1",
+    "mysql2": "^3.7.0",
     "rimraf": "^5.0.5",
     "typeorm": "^0.3.19",
+    "typeorm-extension": "^3.2.0",
     "typescript": "^5.3.3"
   },
   "devDependencies": {
     "concurrently": "^8.2.2",
-    "nodemon": "^3.0.2"
+    "nodemon": "^3.0.2",
+    "ts-node": "^10.9.2"
   }
 }

@@ -8,29 +8,50 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const BaseController_1 = require("../base/abstractions/BaseController");
+const ProductEntity_1 = require("./ProductEntity");
+const data_source_1 = __importDefault(require("../data-source"));
+const typeorm_1 = require("typeorm");
 class ProductController extends BaseController_1.BaseController {
     constructor() {
         super();
         this.path = "/products";
+        this.GetAll = (request, response) => __awaiter(this, void 0, void 0, function* () {
+            var result = yield this._db.find(ProductEntity_1.Product);
+            response.json(result);
+        });
         this.Insert = (request, response) => __awaiter(this, void 0, void 0, function* () {
             response.json(request.body);
         });
+        this.FindAll = (request, response) => __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
+            var param = request.query;
+            var wheres = {};
+            if (param["name"] != undefined) {
+                wheres["name"] = (0, typeorm_1.Like)('%' + param["name"] + '%');
+            }
+            var result = yield this._db.getRepository(ProductEntity_1.Product).findAndCount({
+                where: wheres,
+                order: { name: "DESC" },
+                take: parseInt(((_a = param["take"]) === null || _a === void 0 ? void 0 : _a.toString()) || "10"),
+                skip: parseInt(((_b = param["skip"]) === null || _b === void 0 ? void 0 : _b.toString()) || "0")
+            });
+            return response.json(result);
+        });
+        this._db = data_source_1.default.getRepository(ProductEntity_1.Product).manager;
         this.initializeRoutes();
     }
     initializeRoutes() {
         this.router.get(this.path, this.GetAll);
         this.router.post(this.path, this.Insert);
+        this.router.get(this.path + "/get", this.FindAll);
         // Bạn có thể thêm put, patch, delete sau.
     }
     route() {
     }
-    GetAll(request, response) {
-        return __awaiter(this, void 0, void 0, function* () {
-            response.json();
-        });
-    }
-    ;
 }
 exports.default = ProductController;

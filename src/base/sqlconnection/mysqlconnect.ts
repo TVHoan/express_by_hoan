@@ -1,7 +1,8 @@
 import { DataSource } from "typeorm"
 
 export function dbconect(host: string ="localhost", port :number = 3306,username:string = "root",
-                         password: string = "1",database:string ="",entities: any,synchronize:boolean= true){
+                         password: string = "1",database:string ="",entities: any,migrations: any,synchronize:boolean= true
+                         ){
     return  new DataSource({
         type:  "mysql",
         host: host ,
@@ -10,7 +11,9 @@ export function dbconect(host: string ="localhost", port :number = 3306,username
         password: password,
         database: database,
         entities: entities,
-        synchronize: synchronize,
+        migrations :migrations,
+        synchronize: synchronize
+
     })
 }
 
