@@ -1,28 +1,32 @@
 import {BaseController} from "../base/abstractions/BaseController";
 import express from "express";
-import {Get} from "../base/decorator/Route";
-export default class ProductController extends BaseController {
-     public path = "/heroes";
+import {dbcon} from "../index";
+import {Product} from "./ProductEntity";
+import {Repository} from "typeorm";
 
+export default class ProductController extends BaseController {
+     public path = "/products";
+     private _repo :any ;
      constructor() {
          super();
+         this._repo = dbcon.getRepository(Product);
          this.initializeRoutes();
      }
 
      public initializeRoutes() {
-         this.router.get(this.path, this.getAllHero);
-         this.router.post(this.path, this.addHero);
+         this.router.get(this.path, this.GetAll);
+         this.router.post(this.path, this.Insert);
+
          // Bạn có thể thêm put, patch, delete sau.
      }
      route(){
 
      }
-     @Get("/heros")
-     async getAllHero(request: express.Request, response: express.Response) {
-         var a = {a:2};
-         response.json(a);
+     async GetAll(request: express.Request, response: express.Response) {
+        var result =  await this._repo.manager.getAll();
+         response.json(result);
      };
-     addHero = async (request: express.Request, response: express.Response) => {
+     Insert = async (request: express.Request, response: express.Response) => {
          response.json(request.body);
      };
 }

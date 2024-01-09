@@ -26,6 +26,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.BaseController = void 0;
 const express = __importStar(require("express"));
 class BaseController {
+    static getInstance() {
+        return this;
+    }
     constructor() {
         this.router = express.Router();
     }

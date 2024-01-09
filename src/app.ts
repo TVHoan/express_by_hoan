@@ -1,5 +1,7 @@
 import express from "express";
 import {BaseController} from "./base/abstractions/BaseController";
+import {Router} from "express";
+
 class App {
     public app: express.Application;
     public port: number | string;
@@ -23,6 +25,7 @@ class App {
         controllers.forEach((controller) => {
             this.app.use("/", controller.router);
         });
+
     }
 
     public listen() {
