@@ -23,7 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BaseController = void 0;
+exports.Middleware = exports.BaseController = void 0;
 const express = __importStar(require("express"));
 class BaseController {
     static getInstance() {
@@ -31,6 +31,10 @@ class BaseController {
     }
     constructor() {
         this.router = express.Router();
+        this.middleware = [new Middleware()];
     }
 }
 exports.BaseController = BaseController;
+class Middleware {
+}
+exports.Middleware = Middleware;

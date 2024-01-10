@@ -8,9 +8,12 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const app_1 = __importDefault(require("./app"));
 const ProductController_1 = __importDefault(require("./products/ProductController"));
 const data_source_1 = __importDefault(require("./data-source"));
+const AuthController_1 = __importDefault(require("./auth/AuthController"));
 dotenv_1.default.config();
 const PORT = process.env.PORT || 3000;
-const app = new app_1.default([new ProductController_1.default()], PORT);
+const app = new app_1.default([new AuthController_1.default(),
+    new ProductController_1.default()
+], PORT);
 exports.dbcon = data_source_1.default;
 exports.dbcon.initialize()
     .then(() => {
