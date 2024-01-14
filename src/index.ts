@@ -1,9 +1,9 @@
 import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
 import App from "./app";
-import ProductController from "./products/ProductController";
+import ProductController from "./controllers/ProductController";
 import {DataSource} from "typeorm";
-import {Product} from "./products/ProductEntity";
+import {Product} from "./entitys/ProductEntity";
 import {dbconect} from "./base/sqlconnection/mysqlconnect";
 import dataSource from "./data-source";
 import AuthController from "./auth/AuthController";

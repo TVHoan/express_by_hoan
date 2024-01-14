@@ -1,5 +1,5 @@
 import {setSeederFactory} from "typeorm-extension";
-import {Product} from "../products/ProductEntity";
+import {Product} from "../entitys/ProductEntity";
 import {Faker} from "@faker-js/faker";
 import {User} from "../auth/UserEntity";
 import bcrypt from "bcrypt";

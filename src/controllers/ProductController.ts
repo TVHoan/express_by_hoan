@@ -1,6 +1,6 @@
 import {BaseController, Middleware} from "../base/abstractions/BaseController";
 import express from "express";
-import {Product} from "./ProductEntity";
+import {Product} from "../entitys/ProductEntity";
 import dataSource from "../data-source";
 import {EntityManager, Like} from "typeorm";
 import {authPlugins} from "mysql2";
@@ -19,7 +19,7 @@ export default class ProductController extends BaseController {
      public initializeRoutes() {
          this.router.get(this.path,[authozire(["GetProducts"])], this.GetAll);
          this.router.post(this.path,[], this.Insert);
-         this.router.get(this.path+"/get",[], this.FindAll);
+         this.router.get(this.path+"/get",this.FindAll);
      }
     GetAll = async (request: express.Request, response: express.Response) => {
         var result =  await this._db.find(Product);

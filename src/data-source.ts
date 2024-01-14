@@ -1,5 +1,5 @@
 import {DatabaseType, DataSource, DataSourceOptions} from 'typeorm'
-import {Product} from "./products/ProductEntity";
+import {Product} from "./entitys/ProductEntity";
 import {SeederOptions} from "typeorm-extension";
 import MainSeeder from "./factory/main.seeder";
 import { productsFactory} from "./factory/product.factory";

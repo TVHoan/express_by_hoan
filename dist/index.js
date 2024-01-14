@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.dbcon = void 0;
 const dotenv_1 = __importDefault(require("dotenv"));
 const app_1 = __importDefault(require("./app"));
-const ProductController_1 = __importDefault(require("./products/ProductController"));
+const ProductController_1 = __importDefault(require("./controllers/ProductController"));
 const data_source_1 = __importDefault(require("./data-source"));
 const AuthController_1 = __importDefault(require("./auth/AuthController"));
 dotenv_1.default.config();

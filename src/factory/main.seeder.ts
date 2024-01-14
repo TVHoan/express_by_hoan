@@ -1,6 +1,6 @@
 import { DataSource } from "typeorm";
 import { Seeder, SeederFactoryManager } from "typeorm-extension";
-import { Product } from "../products/ProductEntity";
+import { Product } from "../entitys/ProductEntity";
 import {User} from "../auth/UserEntity";
 import {Permission} from "../auth/PermissionEntity";
 import {permissions} from "./permission.factory";

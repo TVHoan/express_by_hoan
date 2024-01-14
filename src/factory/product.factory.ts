@@ -1,6 +1,6 @@
 import { Faker } from "@faker-js/faker";
 import { setSeederFactory } from "typeorm-extension";
-import { Product } from "../products/ProductEntity"
+import { Product } from "../entitys/ProductEntity"
 
 export const productsFactory = setSeederFactory(Product, (faker: Faker) => {
     const product = new Product();
