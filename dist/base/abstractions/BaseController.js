@@ -31,7 +31,6 @@ class BaseController {
     }
     constructor() {
         this.router = express.Router();
-        this.middleware = [new Middleware()];
     }
 }
 exports.BaseController = BaseController;

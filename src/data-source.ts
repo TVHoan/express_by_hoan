@@ -6,6 +6,8 @@ import { productsFactory} from "./factory/product.factory";
 import dotenv from "dotenv";
 import {User} from "./auth/UserEntity";
 import {Permission} from "./auth/PermissionEntity";
+import {usersFactory} from "./factory/user.factory";
+import {permissionsFactory} from "./factory/permission.factory";
 
 dotenv.config();
 
@@ -21,7 +23,7 @@ export const dataSourceOption:DataSourceOptions  & SeederOptions = {
     migrationsTableName: "custom_migration_table",
     // seed
     seeds : [MainSeeder],
-    factories: [productsFactory],
+    factories: [usersFactory,permissionsFactory,productsFactory],
 }
 const dataSource = new DataSource(dataSourceOption);
 export default dataSource;

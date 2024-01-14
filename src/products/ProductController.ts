@@ -4,7 +4,7 @@ import {Product} from "./ProductEntity";
 import dataSource from "../data-source";
 import {EntityManager, Like} from "typeorm";
 import {authPlugins} from "mysql2";
-import {authMiddleware} from "../auth/AuthMiddleware";
+import {authozire} from "../auth/AuthMiddleware";
 
 export default class ProductController extends BaseController {
      public path = "/products";
@@ -13,20 +13,13 @@ export default class ProductController extends BaseController {
          super();
          this._db = dataSource.getRepository(Product).manager;
          this.initializeRoutes();
-         var middleware = new  Middleware();
-         middleware.path = this.path;
-         middleware.middleware = authMiddleware;
-         this.middleware.push(middleware);
-     }
 
+     }
      public initializeRoutes() {
-         this.router.get(this.path, this.GetAll);
-         this.router.post(this.path, this.Insert);
-         this.router.get(this.path+"/get", this.FindAll);
-
-         // Bạn có thể thêm put, patch, delete sau.
+         this.router.get(this.path,[authozire(["GetProducts"])], this.GetAll);
+         this.router.post(this.path,[], this.Insert);
+         this.router.get(this.path+"/get",[], this.FindAll);
      }
-
     GetAll = async (request: express.Request, response: express.Response) => {
         var result =  await this._db.find(Product);
          response.json(result);
@@ -48,4 +41,5 @@ export default class ProductController extends BaseController {
          });
          return response.json(result);
      }
+
 }

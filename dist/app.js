@@ -20,11 +20,6 @@ class App {
         });
         controllers.forEach((controller) => {
             this.app.use("/", controller.router);
-            if (controller.middleware.length > 0) {
-                controller.middleware.forEach((middleware) => {
-                    this.app.get(middleware.path, middleware.middleware);
-                });
-            }
         });
     }
     listen() {

@@ -45,16 +45,11 @@ class ProductController extends BaseController_1.BaseController {
         });
         this._db = data_source_1.default.getRepository(ProductEntity_1.Product).manager;
         this.initializeRoutes();
-        var middleware = new BaseController_1.Middleware();
-        middleware.path = this.path;
-        middleware.middleware = AuthMiddleware_1.authMiddleware;
-        this.middleware.push(middleware);
     }
     initializeRoutes() {
-        this.router.get(this.path, this.GetAll);
-        this.router.post(this.path, this.Insert);
-        this.router.get(this.path + "/get", this.FindAll);
-        // Bạn có thể thêm put, patch, delete sau.
+        this.router.get(this.path, [(0, AuthMiddleware_1.authozire)(["GetProducts"])], this.GetAll);
+        this.router.post(this.path, [], this.Insert);
+        this.router.get(this.path + "/get", [], this.FindAll);
     }
 }
 exports.default = ProductController;
