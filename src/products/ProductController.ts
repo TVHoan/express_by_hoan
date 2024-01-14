@@ -5,6 +5,7 @@ import dataSource from "../data-source";
 import {EntityManager, Like} from "typeorm";
 import {authPlugins} from "mysql2";
 import {authozire} from "../auth/AuthMiddleware";
+import {getUser} from "../auth/Auth";
 
 export default class ProductController extends BaseController {
      public path = "/products";
@@ -22,10 +23,11 @@ export default class ProductController extends BaseController {
      }
     GetAll = async (request: express.Request, response: express.Response) => {
         var result =  await this._db.find(Product);
-         response.json(result);
+        return response.json(result);
      };
      Insert = async (request: express.Request, response: express.Response) => {
-         response.json(request.body);
+
+         return response.json({user:getUser(request)});
      };
      FindAll = async (request: express.Request, response: express.Response) =>{
          var param = request.query;

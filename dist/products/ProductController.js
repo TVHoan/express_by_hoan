@@ -17,16 +17,17 @@ const ProductEntity_1 = require("./ProductEntity");
 const data_source_1 = __importDefault(require("../data-source"));
 const typeorm_1 = require("typeorm");
 const AuthMiddleware_1 = require("../auth/AuthMiddleware");
+const Auth_1 = require("../auth/Auth");
 class ProductController extends BaseController_1.BaseController {
     constructor() {
         super();
         this.path = "/products";
         this.GetAll = (request, response) => __awaiter(this, void 0, void 0, function* () {
             var result = yield this._db.find(ProductEntity_1.Product);
-            response.json(result);
+            return response.json(result);
         });
         this.Insert = (request, response) => __awaiter(this, void 0, void 0, function* () {
-            response.json(request.body);
+            return response.json({ user: (0, Auth_1.getUser)(request) });
         });
         this.FindAll = (request, response) => __awaiter(this, void 0, void 0, function* () {
             var _a, _b;

@@ -3,7 +3,7 @@ import jwt, {JsonWebTokenError} from "jsonwebtoken";
 import {User} from "./UserEntity";
 
 export const authozire  =
-     (permissions: Array<string>) => {
+     (permissionsAcept: Array<string>) => {
          return async (request: express.Request, response: express.Response, next: express.NextFunction) => {
              const token = request.headers.authorization;
              if (token) {
@@ -13,42 +13,28 @@ export const authozire  =
                  try {
                      const verificationResponse = jwt.verify(beartoken, secret) as jwt.JwtPayload;
                      const Id = verificationResponse.id;
-
-                     const user = await User.findOneBy({id: Id});
-                     if (user) {
-                         if (permissions.length > 0) {
-                             const user = await User.findOne({
-                                 where: {id: Id}, relations: {
-                                     permissions: true
-                                 }
-                             });
-                             if (user) {
-                                 permissions.forEach(async (value) => {
-                                     if (user.permissions.filter(x => x.name == value))
-                                         next();
+                     const Name = verificationResponse.name;
+                     const Email = verificationResponse.email;
+                     const permissions :string[] = verificationResponse.permissions;
+                         if (permissionsAcept.length > 0) {
+                             permissionsAcept.forEach(async (value) => {
+                                     if (permissions.filter(x => x == value).length == 0)
+                                      return response
+                                         .status(401)
+                                         .json({success: false, message: "You not have Permission "});
 
                                  })
-                             } else {
-                                  response
-                                     .status(401)
-                                     .json({success: false, message: "You not have Permission "});
                              }
-                         }
                          next();
 
-                     } else {
-                          response
-                             .status(401)
-                             .json({success: false, message: "UnAuthorization "});
-                     }
                  } catch (error) {
-                      response
+                     return  response
                          .status(401)
                          .json({success: false, error});
                  }
              } else {
 
-                  response
+                 return  response
                      .status(403)
                      .json({success: false, message: "Authorization token not found"});
 

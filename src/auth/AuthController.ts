@@ -27,7 +27,9 @@ export default class AuthController extends BaseController {
          const email = request.body.email || 'admin';
          const password = request.body.password || '1';
 
-         const user = await User.findOne({where: {email:email }});
+         const user = await User.findOne({where: {email:email },relations: {
+                 permissions: true
+             }});
          if (!user) {
              return response.status(401).send('Tên đăng nhập không tồn tại.');
          }
@@ -41,7 +43,10 @@ export default class AuthController extends BaseController {
          const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
 
          const dataForAccessToken = {
-             username: user.email,
+             id: user.id,
+             name: user.name,
+             email: user.email,
+             permissions: user.permissions.map(x=>x.name )
          };
          const  auth = new  AuthToken();
          const accessToken = await auth.generate(
@@ -58,7 +63,11 @@ export default class AuthController extends BaseController {
          return response.json({
              msg: 'Đăng nhập thành công.',
              accessToken,
-             user,
+             user: {
+                 id:user.id,
+                 permissions: user.permissions.map(x=>x.name )
+             }
+
          });
         }
     Register = async (request: express.Request, response: express.Response)=>{
@@ -67,7 +76,7 @@ export default class AuthController extends BaseController {
         const password = request.body.password;
         const saltRounds = 10;
 
-        var user =  await this._db_user.getRepository(User).findOne({where :{email: email}});
+        var user =  await User.findOne({where :{email: email}});
         if (user) return  response.status(409).send('Tên tài khoản đã tồn tại.');
         else {
             const HashPassword = await bcrypt.hashSync(password, saltRounds);
