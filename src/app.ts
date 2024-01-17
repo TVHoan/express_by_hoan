@@ -1,7 +1,13 @@
 import express from "express";
 import {BaseController} from "./base/abstractions/BaseController";
 import {Router} from "express";
+import * as os from "os";
+import * as formData from 'express-form-data';
 
+const options = {
+    uploadDir: os.tmpdir(),
+    autoClean: true
+};
 class App {
     public app: express.Application;
     public port: number | string;
@@ -16,6 +22,15 @@ class App {
 
     private initializeMiddlewares() {
         this.app.use(express.json());
+        this.app.use(express.urlencoded({ extended: true }));
+        // parse data with connect-multiparty.
+        this.app.use(formData.parse(options));
+// delete from the request all empty files (size == 0)
+        this.app.use(formData.format());
+// change the file objects to fs.ReadStream
+        this.app.use(formData.stream());
+// union the body and the files
+        this.app.use(formData.union());
     }
 
     private initializeControllers(controllers: BaseController[]) {

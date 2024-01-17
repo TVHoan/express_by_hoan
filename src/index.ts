@@ -7,6 +7,7 @@ import {Product} from "./entitys/ProductEntity";
 import {dbconect} from "./base/sqlconnection/mysqlconnect";
 import dataSource from "./data-source";
 import AuthController from "./auth/AuthController";
+import FileController from "./controllers/FileController";
 
 dotenv.config();
 
@@ -14,6 +15,7 @@ const PORT = process.env.PORT || 3000;
 
 const  app = new App(
     [new AuthController(),
+    new FileController(),
     new ProductController()
     ]
     ,PORT)

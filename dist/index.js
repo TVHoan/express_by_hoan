@@ -9,9 +9,11 @@ const app_1 = __importDefault(require("./app"));
 const ProductController_1 = __importDefault(require("./controllers/ProductController"));
 const data_source_1 = __importDefault(require("./data-source"));
 const AuthController_1 = __importDefault(require("./auth/AuthController"));
+const FileController_1 = __importDefault(require("./controllers/FileController"));
 dotenv_1.default.config();
 const PORT = process.env.PORT || 3000;
 const app = new app_1.default([new AuthController_1.default(),
+    new FileController_1.default(),
     new ProductController_1.default()
 ], PORT);
 exports.dbcon = data_source_1.default;

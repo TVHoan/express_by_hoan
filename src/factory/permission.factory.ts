@@ -1,7 +1,8 @@
 import {setSeederFactory} from "typeorm-extension";
 import {Permission} from "../auth/PermissionEntity";
 export const permissions: string[] = [
-    "GetProducts"
+    "GetProducts",
+    "InsertProducts"
 ]
 export const permissionsFactory = setSeederFactory(Permission, (faker) => {
     const permission = new Permission();

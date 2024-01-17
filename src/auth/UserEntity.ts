@@ -18,5 +18,4 @@ export class User extends BaseEntity {
     @ManyToMany(() => Permission)
     @JoinTable()
     permissions: Permission[];
-
 }
