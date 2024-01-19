@@ -7,7 +7,7 @@ export   function getUser  (request: express.Request)  {
         var beartoken = token.replace("Bearer ", "")
         const secret = process.env.ACCESS_TOKEN_SECRET || "";
         if (secret=="" ||secret ==undefined){
-            throw {
+            return  {
                 messenge: "ACCESS_TOKEN_SECRET not found"
             }
         }
@@ -25,14 +25,16 @@ export   function getUser  (request: express.Request)  {
             }
         }
         catch (e) {
-            throw {
+            return {
                 e
             }
         }
         }
 }
     class User{
-        id: string
-        username:string
-        permission: string[]
+        Id: string
+        Name:string
+        Email:string
+        Permissions: string[]
+        messenge:string
     }

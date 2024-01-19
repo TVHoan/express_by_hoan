@@ -15,6 +15,6 @@ export default class FileController extends BaseController {
 
      Readfile = async (request: express.Request, response: express.Response) => {
         var filename = request.params.filename;
-         ReadFile("productimage",filename,response);
+         await  ReadFile(this.path+"/image/"+filename,request,response);
     }
 }

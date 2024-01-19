@@ -11,6 +11,7 @@ import {permissionsFactory} from "./factory/permission.factory";
 import {Order} from "./entitys/OrderEntity";
 import {Orderline} from "./entitys/OrderlineEntity";
 import {Category} from "./entitys/CategoryEntity";
+import {File} from "./entitys/FileEntity";
 
 dotenv.config();
 
@@ -21,7 +22,7 @@ export const dataSourceOption:DataSourceOptions  & SeederOptions = {
     username: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE,
-    entities: [User,Permission,Product,Category,Order,Orderline],
+    entities: [User,Permission,File,Product,Category,Order,Orderline],
     migrations: ["dist/migrations/**"],
     migrationsTableName: "custom_migration_table",
     // seed

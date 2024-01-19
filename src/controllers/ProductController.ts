@@ -29,11 +29,11 @@ export default class ProductController extends BaseController {
      Insert = async (request: express.Request, response: express.Response) => {
          try {
              var file = request.body.file
-             var image =  await SaveFile("abc.jpg",file);
+             var image =  await SaveFile("abc.jpg",file,[1]);
              var product = new Product();
              product.name = request.body.name ?? "";
              product.description = request.body.description ?? "";
-             if (file) product.image = image
+             if (file) product.image = image ??""
              else product.image = "";
              product.manufacturer = request.body.manufacturer ?? "";
              product.quantity = request.body.quantity ?? 0;
