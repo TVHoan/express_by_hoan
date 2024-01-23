@@ -29,16 +29,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const os = __importStar(require("os"));
 const formData = __importStar(require("express-form-data"));
+const socketio = __importStar(require("socket.io"));
+const http = __importStar(require("http"));
 const options = {
     uploadDir: os.tmpdir(),
     autoClean: true
 };
 class App {
-    constructor(controllers, port) {
+    constructor(controllers, broadcasts = [], port) {
         this.app = (0, express_1.default)();
         this.port = port;
         this.initializeMiddlewares();
         this.initializeControllers(controllers);
+        this.initializeBroadCasts(broadcasts);
     }
     initializeMiddlewares() {
         this.app.use(express_1.default.json());
@@ -60,9 +63,19 @@ class App {
             this.app.use("/", controller.router);
         });
     }
+    initializeBroadCasts(broadcasts) {
+        this.server = http.createServer(this.app);
+        this.io = new socketio.Server(this.server);
+        broadcasts.forEach((b) => {
+            this.io.on("connection", b.conection);
+        });
+    }
     listen() {
-        this.app.listen(this.port, () => {
+        this.server.listen(this.port, () => {
             console.log(`App listening on the port ${this.port}`);
+        });
+        this.io.on("connection", (...params) => {
+            console.log("Websocket connection");
         });
     }
 }

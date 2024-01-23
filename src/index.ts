@@ -8,6 +8,8 @@ import {dbconect} from "./base/sqlconnection/mysqlconnect";
 import dataSource from "./data-source";
 import AuthController from "./auth/AuthController";
 import FileController from "./controllers/FileController";
+import * as socketio from "socket.io";
+import ChatController from "./controllers/ChatController";
 
 dotenv.config();
 
@@ -17,7 +19,8 @@ const  app = new App(
     [new AuthController(),
     new FileController(),
     new ProductController()
-    ]
+    ],
+    [new ChatController()]
     ,PORT)
 
 export  const dbcon = dataSource

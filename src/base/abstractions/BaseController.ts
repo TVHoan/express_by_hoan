@@ -1,4 +1,5 @@
 import * as express from "express";
+import {ReservedOrUserListener} from "socket.io/dist/typed-events";
 export abstract class BaseController {
     public router: express.Router;
     static getInstance() {
